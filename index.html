@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>APM Arquitetura | Projetos e gestão de obras em Belo Horizonte</title>
+  <meta name="description" content="APM Arquitetura — Projetos arquitetônicos, consultoria técnica e gestão de obras em Belo Horizonte." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- Navbar Bootstrap -->
+  <header id="topo" class="sticky-top bg-white border-bottom">
+    <nav class="navbar navbar-expand-lg bg-white">
+      <div class="container">
+        <a class="navbar-brand d-flex flex-column align-items-center text-center" href="#topo" aria-label="APM Arquitetura - ir ao topo">
+          <img src="logo-apm.svg" width="72" height="72" alt="APM Arquitetura" class="mb-1" />
+          <span class="fw-bold">APM Arquitetura</span>
+          <small class="text-muted">Projetos e gestão de obras em Belo Horizonte</small>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNav" aria-controls="siteNav" aria-expanded="false" aria-label="Alternar navegação">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="siteNav">
+          <ul class="navbar-nav align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="#home" data-path="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#sobre-profissional" data-path="/sobre">Sobre a profissional</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contato" data-path="/contato">Contato</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="maisDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mais</a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="maisDropdown">
+                <li><a class="dropdown-item" href="#o-que-fazemos" data-path="/servicos">O que fazemos</a></li>
+                <li><a class="dropdown-item" href="#destaques" data-path="/destaques">Projetos em destaque</a></li>
+                <li><a class="dropdown-item" href="#carreira" data-path="/carreira">Carreira</a></li>
+                <li><a class="dropdown-item" href="#mapa" data-path="/mapa">Mapa</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <!-- Home com carrossel Bootstrap -->
+    <section id="home" class="py-4 bg-light">
+      <div class="container">
+        <div class="row mb-3">
+          <div class="col">
+            <h2 class="h4">Bem-vindo</h2>
+            <p class="text-muted">Conheça projetos e a atuação da APM Arquitetura.</p>
+          </div>
+        </div>
+        <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+          <div class="carousel-inner rounded-4 shadow-sm border">
+            <div class="carousel-item active">
+              <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80" class="d-block w-100" alt="Residencial — exemplo">
+            </div>
+            <div class="carousel-item">
+              <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1600&q=80" class="d-block w-100" alt="Comercial — exemplo">
+            </div>
+            <div class="carousel-item">
+              <img src="https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=1600&q=80" class="d-block w-100" alt="Interiores — exemplo">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hero (copy) -->
+    <section class="py-5">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6">
+            <h1 class="display-6 fw-bold">Arquitetura clara, eficiente e alinhada às normas.</h1>
+            <p class="text-muted">Projetos completos, consultoria técnica e gestão de obras com documentação objetiva e acompanhamento próximo.</p>
+            <div class="d-flex flex-wrap gap-2">
+              <a class="btn btn-primary" href="#portfolio">Ver portfólio</a>
+              <a class="btn btn-outline-primary" href="#contato">Solicitar contato</a>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80" class="img-fluid rounded-4 border shadow-sm" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sobre a profissional -->
+    <section id="sobre-profissional" class="py-5 bg-light">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6">
+            <h2>Sobre a profissional</h2>
+            <p>A APM Arquitetura é conduzida pela arquiteta Ana Paula Mendes de Sousa, especialista em gestão de projetos e obras. São 6 anos de carreira com foco em eficiência, qualidade e conformidade técnica.</p>
+          </div>
+          <div class="col-lg-6">
+            <figure class="m-0">
+              <img src="https://images.unsplash.com/photo-1529420705456-5c7e04dd043d?auto=format&fit=crop&w=1600&q=80" class="img-fluid rounded-4 border shadow-sm" alt="Foto da empresa (exemplo)">
+              <figcaption class="text-muted small mt-2">Espaço para foto da empresa.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- O que fazemos -->
+    <section id="o-que-fazemos" class="py-5">
+      <div class="container">
+        <header class="mb-3">
+          <h2>O que fazemos</h2>
+          <p class="text-muted">Soluções de projeto, consultoria e gestão.</p>
+        </header>
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-3">
+            <div class="card h-100 border rounded-4">
+              <div class="card-body">
+                <h3 class="h6">Projetos arquitetônicos completos</h3>
+                <p class="text-muted">Do estudo à execução.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card h-100 border rounded-4">
+              <div class="card-body">
+                <h3 class="h6">Consultoria técnica</h3>
+                <p class="text-muted">Decisões seguras e viáveis.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card h-100 border rounded-4">
+              <div class="card-body">
+                <h3 class="h6">Gestão de obras</h3>
+                <p class="text-muted">Planejamento e controle.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="card h-100 border rounded-4">
+              <div class="card-body">
+                <h3 class="h6">Modelagem 3D e BIM</h3>
+                <p class="text-muted">Compatibilização e precisão.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projetos em destaque -->
+    <section id="destaques" class="py-5 bg-light">
+      <div class="container">
+        <header class="mb-3">
+          <h2>Projetos em destaque</h2>
+          <p class="text-muted">Seleção de projetos representativos.</p>
+        </header>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="card h-100 border rounded-4">
+              <img src="https://images.unsplash.com/photo-1529420705456-5c7e04dd043d?auto=format&fit=crop&w=1600&q=80" class="card-img-top" alt="Destaque — exemplo">
+              <div class="card-body">
+                <h3 class="h6">Residencial Integrado</h3>
+                <p class="text-muted">Conforto e funcionalidade</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card h-100 border rounded-4">
+              <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1600&q=80" class="card-img-top" alt="Destaque — exemplo">
+              <div class="card-body">
+                <h3 class="h6">Comercial Contemporâneo</h3>
+                <p class="text-muted">Eficiência de layout</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Carreira -->
+    <section id="carreira" class="py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="border rounded-4 p-4 text-center bg-light shadow-sm">
+              <p class="display-4 fw-bold mb-0 text-primary">6</p>
+              <p class="text-muted mb-0">anos de carreira</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" class="py-5 bg-light">
+      <div class="container">
+        <header class="mb-3">
+          <h2>Contato</h2>
+          <p class="text-muted">Envie uma mensagem para orçamentos, dúvidas e parcerias.</p>
+        </header>
+        <div class="row g-3 align-items-start">
+          <div class="col-lg-8">
+            <div class="border rounded-4 p-3 bg-white">
+              <dl class="row mb-0">
+                <dt class="col-sm-3">E-mail</dt>
+                <dd class="col-sm-9"><a href="mailto:anapaulamendess2013@gmail.com">anapaulamendess2013@gmail.com</a></dd>
+                <dt class="col-sm-3">WhatsApp</dt>
+                <dd class="col-sm-9"><a href="https://wa.me/5531994214809" target="_blank" rel="noopener noreferrer">(31) 99421-4809</a></dd>
+              </dl>
+              <div class="mt-3 d-flex flex-wrap gap-2">
+                <a class="btn btn-primary" href="https://wa.me/5531994214809" target="_blank" rel="noopener noreferrer">Abrir WhatsApp</a>
+                <a class="btn btn-outline-primary" href="mailto:anapaulamendess2013@gmail.com">Enviar e-mail</a>
+              </div>
+            </div>
+          </div>
+          <aside class="col-lg-4">
+            <div class="border rounded-4 p-3 bg-white mb-3">
+              <p class="fw-semibold mb-1">Atendimento</p>
+              <p class="text-muted mb-0">Belo Horizonte e região metropolitana.</p>
+            </div>
+            <div class="border rounded-4 p-3 bg-white">
+              <p class="fw-semibold mb-1">Entrega</p>
+              <p class="text-muted mb-0">Documentação objetiva e suporte durante a obra.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mapa -->
+    <section id="mapa" class="py-5">
+      <div class="container">
+        <header class="mb-3">
+          <h2>Localização</h2>
+          <p class="text-muted">Mapa do Google será inserido aqui.</p>
+        </header>
+        <div class="border rounded-4 p-5 text-center bg-light">Mapa do Google (placeholder)</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-top py-4 bg-white">
+    <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <p class="text-muted mb-0">© 2026 APM Arquitetura - Belo Horizonte, MG.</p>
+      <div class="d-flex align-items-center gap-2">
+        <a class="social" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <img src="instagram.svg" alt="Instagram" width="24" height="24" />
+        </a>
+        <a class="social" href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+          <img src="tiktok.svg" alt="TikTok" width="24" height="24" />
+        </a>
+        <a class="to-top btn btn-sm btn-outline-secondary" href="#topo">Topo</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jE2I1iBrw0brd0E" crossorigin="anonymous"></script>
+
+  <script>
+    // Router simples para URLs curtas (pushState) -> rolagem às seções
+    (() => {
+      const map = {
+        '/': 'home',
+        '/home': 'home',
+        '/sobre': 'sobre-profissional',
+        '/servicos': 'o-que-fazemos',
+        '/destaques': 'destaques',
+        '/carreira': 'carreira',
+        '/contato': 'contato',
+        '/mapa': 'mapa',
+      };
+
+      const offset = 80; // compensar navbar fixa
+      const scrollToId = (id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const y = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: y < 0 ? 0 : y, behavior: 'smooth' });
+      };
+
+      const applyPath = (path) => {
+        const id = map[path] || 'home';
+        scrollToId(id);
+      };
+
+      const enhance = () => {
+        document.querySelectorAll('[data-path]').forEach((a) => {
+          a.addEventListener('click', (e) => {
+            const path = a.getAttribute('data-path');
+            if (!path) return;
+            e.preventDefault();
+            window.history.pushState({}, '', path);
+            applyPath(path);
+            // fecha navbar se aberta
+            const nav = document.getElementById('siteNav');
+            if (nav?.classList.contains('show')) {
+              const inst = bootstrap.Collapse.getInstance(nav) || new bootstrap.Collapse(nav, { toggle: false });
+              inst.hide();
+            }
+          });
+        });
+      };
+
+      window.addEventListener('popstate', () => applyPath(location.pathname));
+      document.addEventListener('DOMContentLoaded', () => {
+        enhance();
+        applyPath(location.pathname);
+      });
+    })();
+  </script>
+</body>
+</html>
