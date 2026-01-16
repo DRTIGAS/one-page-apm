@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>APM Arquitetura — Em manutenção</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f7f7f9;
+      --text: #121212;
+      --muted: #5e5e66;
+      --accent: #2f86f6;
+      --border: #e8e8ee;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: var(--text); background:
+      radial-gradient(1200px 500px at 10% -10%, #eef4ff 0%, rgba(238, 244, 255, 0) 45%),
+      linear-gradient(180deg, #ffffff 0%, #fafbff 100%);
+    }
+    .wrap { min-height: 100%; display: grid; place-items: center; padding: 2rem; }
+    .card { width: min(700px, 100%); background: var(--bg); border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 12px 30px rgba(0,0,0,.08); padding: 2rem; text-align: center; }
+    .logo { width: 84px; height: 84px; display: block; margin: 0 auto 0.75rem; }
+    h1 { margin: 0 0 .5rem; font-size: clamp(1.6rem, 2vw + 1rem, 2.2rem); }
+    p { margin: 0; color: var(--muted); }
+    .actions { margin-top: 1rem; display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: .7rem 1rem; border-radius: 12px; border: 1px solid var(--accent); text-decoration: none; font-weight: 600; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-outline { background: transparent; color: var(--accent); }
+    .btn:hover { opacity: .95; }
+    .note { margin-top: .75rem; font-size: .92rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="status" aria-label="Site em manutenção">
+      <img src="logo-apm.svg" alt="APM Arquitetura" class="logo" />
+      <h1>Estamos trabalhando para deixar tudo perfeito.</h1>
+      <p>Em breve, o site completo estará no ar. Obrigado pela compreensão.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="mailto:anapaulamendess2013@gmail.com">Enviar e-mail</a>
+        <a class="btn btn-outline" href="https://wa.me/5531994214809" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
+      </div>
+      <p class="note">APM Arquitetura — Belo Horizonte, MG</p>
+    </div>
+  </div>
+</body>
+</html>
