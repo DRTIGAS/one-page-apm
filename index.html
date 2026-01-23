@@ -316,7 +316,7 @@
         <div class="row g-3 align-items-start">
           <div class="col-lg-7">
             <div class="border rounded-4 p-3 bg-white mb-3">
-              <form name="contato-site" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
+              <form name="contato-site" method="POST" action="/?contato=ok" data-netlify="true" netlify-honeypot="bot-field">
                 <input type="hidden" name="form-name" value="contato-site" />
                 <p class="d-none">
                   <label>Não preencha este campo: <input name="bot-field" /></label>
@@ -607,41 +607,22 @@
         }, 8000);
       });
 
-      // Envio do formulário de contato com feedback de sucesso via Netlify Forms
-      const contatoForm = document.querySelector('form[name="contato-site"]');
+      // Exibir mensagem de sucesso do formulário de contato ao retornar da Netlify
       const contatoSucesso = document.querySelector('#contato-sucesso');
+      if (contatoSucesso) {
+        const params = new URLSearchParams(window.location.search);
+        const contatoParam = params.get('contato');
 
-      if (contatoForm && contatoSucesso) {
-        const encode = (data) => {
-          return Object.keys(data)
-            .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-            .join('&');
-        };
+        if (contatoParam === 'ok') {
+          contatoSucesso.classList.remove('d-none');
+          contatoSucesso.focus();
 
-        contatoForm.addEventListener('submit', (event) => {
-          event.preventDefault();
-
-          const formData = new FormData(contatoForm);
-          const data = {};
-          formData.forEach((value, key) => {
-            data[key] = value;
-          });
-
-          fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: encode(data),
-          })
-            .then(() => {
-              contatoForm.reset();
-              contatoSucesso.classList.remove('d-none');
-              contatoSucesso.focus();
-            })
-            .catch(() => {
-              // Em caso de erro, mantém o formulário e apenas registra no console
-              console.error('Não foi possível enviar o formulário agora. Tente novamente em alguns instantes.');
-            });
-        });
+          // Limpa o parâmetro da URL para não reaparecer em visitas futuras
+          if (window.history && window.history.replaceState) {
+            const url = window.location.pathname;
+            window.history.replaceState({}, document.title, url);
+          }
+        }
       }
     });
   </script>
