@@ -1,0 +1,185 @@
+VISÃO GERAL DO SITE
+
+Nome: APM Arquitetura
+Objetivo principal: gerar confiança e contatos (leads) de pessoas que querem reformar, construir, otimizar espaços ou contratar consultoria.
+Tipo: One-page responsiva, com seções claras e navegação por âncoras + URLs curtas.
+Público-alvo:
+- Pessoas físicas: apartamento/casa (reforma, interiores, otimização).
+- Pequenos negócios: salas comerciais, pequenos comércios.
+- Clientes que precisam de consultoria pontual ou gestão de obras.
+
+------------------------------------------------------------
+1. TECNOLOGIA / CÓDIGO / INTEGRAÇÕES (Thiago Alves)
+------------------------------------------------------------
+
+1.1 Estrutura e navegação
+- JÁ IMPLEMENTADO
+  - One-page em HTML + Bootstrap 5 + CSS custom.
+  - Seções principais: Home, Hero, Sobre a profissional, O que fazemos, Casos em destaque, Conteúdo educativo, Contato, Redes sociais, CTA final, Localização, Depoimentos, Tipos de projetos, Rodapé.
+  - Navbar responsiva (desktop + mobile) com links e dropdown "Mais".
+  - Roteador simples com history.pushState para URLs curtas.
+
+- PENDÊNCIAS
+  - Testar todas as âncoras em desktop e mobile, ajustando offset se necessário.
+  - Validar experiência se o JavaScript falhar (links de âncora continuam funcionais).
+
+1.2 Layout e responsividade
+- JÁ IMPLEMENTADO
+  - Layout baseado em containers Bootstrap (.container, .row, .col-*).
+  - Carrossel na Home com componente carousel do Bootstrap.
+  - Imagens responsivas (img-fluid, ratio para o mapa).
+  - Tipografia Inter via Google Fonts.
+
+- PENDÊNCIAS
+  - Ajustar tamanhos e peso das imagens quando trocar para fotos reais.
+  - Otimizar imagens (compressão) na versão final.
+
+1.3 Contato e formulários
+- JÁ IMPLEMENTADO
+  - Formulário simples na seção Contato com campos:
+    - Nome
+    - E-mail ou WhatsApp
+    - Tipo de projeto (Reforma, Construção, Interiores, Consultoria)
+    - Mensagem livre
+  - Envio atual via mailto: para o e-mail da arquiteta.
+
+- PENDÊNCIAS / MELHORIAS
+  - Migrar o formulário para Netlify Forms:
+    - Alterar form para method="POST" data-netlify="true" e incluir input hidden form-name.
+    - Configurar form "contato-apm" no painel Netlify com notificação por e-mail.
+  - Opcional: criar um segundo formulário simples para "Guia gratuito / Checklist" (captura apenas nome + e-mail).
+
+1.4 Integrações externas
+- JÁ IMPLEMENTADO
+  - WhatsApp com mensagem pré-preenchida para falar sobre reforma/construção.
+  - Google Maps embed com localização APM Arquitetura – Projetos e Interiores BH.
+  - Links de redes sociais (Instagram, TikTok) ainda genéricos.
+
+- PENDÊNCIAS
+  - Substituir URLs genéricas pelas contas reais:
+    - Instagram: https://www.instagram.com/SEU_USUARIO
+    - TikTok: https://www.tiktok.com/@SEU_USUARIO
+  - Confirmar / atualizar src de embed do Maps usando "Incorporar um mapa" direto no Google Maps.
+
+1.5 Deploy e infraestrutura
+- JÁ IMPLEMENTADO
+  - Deploy estático no Netlify.
+  - Arquivos de configuração:
+    - _redirects com /* /index.html 200
+    - netlify.toml com redirect SPA para /index.html.
+  - Domínio próprio configurado: apmarquitetura.com.br.
+
+- PENDÊNCIAS
+  - Garantir que o publish directory seja "." no painel Netlify (usar netlify.toml como referência).
+  - Revisar DNS (A/CNAME) e HTTPS (forçar HTTPS) no Netlify.
+  - Consolidar fluxo de deploy via Git (commit -> push -> deploy automático).
+
+------------------------------------------------------------
+2. CONTEÚDO / PRODUTO / MARKETING (Arquiteta + apoio)
+------------------------------------------------------------
+
+2.1 Identidade profissional / Sobre
+- JÁ PRESENTE
+  - Nome: Ana Paula Mendes de Sousa.
+  - Menção a 6 anos de carreira.
+  - Texto geral sobre foco em gestão de projetos e obras.
+
+- DADOS A COMPLETAR
+  - Faculdade e ano de formação.
+  - Detalhes da especialização (instituição, curso, ano).
+  - Registro profissional no CAU (ex.: CAU: XX000000-0).
+  - CNPJ da empresa para colocar no rodapé.
+  - Endereço ou bairro/região em BH.
+
+2.2 Serviços (o que fazemos)
+- JÁ CONFIGURADO
+  - Cards para:
+    - Projetos arquitetônicos completos.
+    - Consultoria técnica.
+    - Gestão de obras.
+    - Interiores e otimização de espaço.
+  - Seção educativa "Por que contar com um arquiteto na sua obra?".
+
+- A AJUSTAR
+  - Detalhar exemplos reais em cada card:
+    - Tipos de imóveis e situações que mais atende.
+  - Opcional: indicar formatos de contratação (pacote, hora técnica, etc.).
+
+2.3 Portfólio e casos em destaque
+- JÁ PRESENTE
+  - Carrossel com imagens de exemplo.
+  - Seção "Casos reais em destaque" com 2 cards genéricos.
+
+- A COMPLETAR
+  - Substituir imagens por fotos de projetos reais (quando possível).
+  - Ajustar títulos e descrições com dados reais por projeto:
+    - Tipo de imóvel, metragem, bairro/cidade, objetivos, resultados.
+  - Adicionar mais 1 caso se desejar (ex.: consultoria de layout).
+
+2.4 Depoimentos e prova social
+- JÁ PRESENTE
+  - Seção "O que os clientes dizem" com 3 depoimentos de exemplo.
+  - Faixa com badges de tipos de projetos/clientes.
+
+- A COMPLETAR
+  - Substituir depoimentos por relatos reais (nome ou iniciais, tipo de projeto, bairro/cidade).
+  - Incluir, se houver:
+    - Avaliações do Google (estrelinhas, média, trechos de reviews).
+    - Link para o perfil no Google Maps/Business da APM.
+
+2.5 Conteúdo educativo / guia gratuito
+- JÁ PRESENTE
+  - Seção explicando benefícios de ter arquiteto.
+  - Texto "Em breve: guia gratuito com checklist para iniciar sua reforma".
+
+- A FAZER
+  - Criar conteúdo do guia (PDF ou página): checklist prático de reforma.
+  - Disponibilizar o arquivo no projeto (ex.: guia-reforma-apm.pdf).
+  - Ajustar bloco "Conteúdo extra" com botão real de download.
+  - Opcional: exigir e-mail antes do download para gerar lead.
+
+2.6 Redes sociais e presença digital
+- JÁ PRESENTE
+  - Bloco "Acompanhe o dia a dia da APM Arquitetura" com ícones de Instagram e TikTok.
+  - Ícones repetidos no rodapé.
+
+- A COMPLETAR
+  - Informar @ reais de cada rede.
+  - Ajustar textos para refletir o tipo de conteúdo publicado.
+  - Decidir se adiciona outras redes (Pinterest, YouTube, LinkedIn).
+
+------------------------------------------------------------
+3. OPERACIONAL / ATENDIMENTO (Arquiteta)
+------------------------------------------------------------
+
+3.1 Processo de atendimento
+- JÁ DESCRITO
+  - 1. Conversa inicial (briefing, orçamento, prazos).
+  - 2. Projeto (estudos, layout, detalhamento).
+  - 3. Obra (gestão, visitas, apoio técnico).
+  - 4. Entrega (ajustes finais, orientações).
+
+- A COMPLETAR (INTERNAMENTE, MAS PODE IR AO SITE)
+  - Tempo médio de resposta a contatos (ex.: até 1 dia útil).
+  - Canais oficiais de atendimento (WhatsApp, e-mail, redes).
+  - Critérios de filtro de leads (região atendida, tipos de projeto prioritários).
+
+------------------------------------------------------------
+4. RESUMO FEITO x A FAZER
+------------------------------------------------------------
+
+JÁ FEITO EM CÓDIGO
+- Estrutura completa da one-page em Bootstrap.
+- Navegação responsiva + URLs curtas.
+- Hero claro com serviços, região e CTAs.
+- Seções implementadas: Home, Sobre, O que fazemos, Casos em destaque, Conteúdo educativo, Contato, Redes sociais, CTA final, Localização, Depoimentos, Tipos de projetos, Rodapé.
+- Integrações: WhatsApp, Google Maps (embed), links de redes sociais.
+- Deploy no Netlify com domínio próprio e configuração SPA.
+
+A FAZER (PRINCIPAIS ITENS DE CONTEÚDO)
+- Preencher dados reais: formação, especialização, CAU, CNPJ, endereço/bairro.
+- Trazer fotos reais de projetos e ajustar textos de casos de portfólio.
+- Inserir depoimentos reais e, se houver, avaliações do Google.
+- Substituir URLs genéricas de Instagram/TikTok pelos perfis reais.
+- Criar e disponibilizar o guia/checklist de reforma.
+- Migrar formulário de contato para Netlify Forms (opcional, recomendado).

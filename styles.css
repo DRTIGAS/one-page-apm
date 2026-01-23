@@ -1,12 +1,13 @@
 :root {
-  --bg: #ffffff;
-  --surface: #f7f7f9;
-  --text: #121212;
-  --muted: #5e5e66;
-  --border: #e8e8ee;
-  --accent: #2f86f6; /* azul moderno neutro */
-  --accent-ink: #0f4aa3;
-  --shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+  /* Paleta preto + dourado */
+  --bg: #050505;
+  --surface: #121212;
+  --text: #d2cec6;  /* grafite claro para textos principais */
+  --muted: #9a9185; /* grafite mais suave para textos secundários */
+  --border: #33302a;
+  --accent: #c09a6b; /* dourado principal */
+  --accent-ink: #e6c892; /* tom mais claro para hover */
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
   --radius: 16px;
   --container: 1140px;
 }
@@ -35,6 +36,89 @@ a {
 }
 
 a:hover { text-decoration: underline; }
+
+/* Ajustes de tema para classes Bootstrap (dark + dourado) */
+
+.bg-light {
+  background-color: #111111 !important;
+}
+
+.bg-white {
+  background-color: #050505 !important;
+}
+
+.border {
+  border-color: var(--border) !important;
+}
+
+.text-muted {
+  color: var(--muted) !important;
+}
+
+.btn-primary,
+.btn-primary:focus {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #050505 !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-ink) !important;
+  border-color: var(--accent-ink) !important;
+  color: #050505 !important;
+}
+
+.btn-outline-primary {
+  color: var(--accent-ink) !important;
+  border-color: var(--accent) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--accent) !important;
+  border-color: var(--accent-ink) !important;
+  color: #050505 !important;
+}
+
+.navbar,
+.navbar.bg-white {
+  background-color: #050505 !important;
+}
+
+.navbar-brand span,
+.navbar-brand small {
+  color: var(--text) !important;
+}
+
+.navbar-subtitle-script {
+  font-family: "Dancing Script", "Playfair Display", cursive;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.nav-link {
+  color: var(--muted) !important;
+}
+
+.nav-link:hover,
+.nav-link:focus,
+.nav-link.active {
+  color: var(--accent-ink) !important;
+}
+
+.dropdown-menu {
+  background-color: #111111 !important;
+  border-color: var(--border) !important;
+}
+
+.dropdown-item {
+  color: var(--text) !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #1d1a16 !important;
+  color: var(--text) !important;
+}
 
 .container {
   width: min(var(--container), calc(100% - 2rem));
@@ -235,6 +319,94 @@ a:hover { text-decoration: underline; }
   object-fit: cover;
 }
 
+/* Hero no estilo referência (preto + dourado) */
+
+.hero-apm {
+  background: linear-gradient(180deg, #050505 0%, #111111 100%);
+}
+
+.hero-apm-label {
+  letter-spacing: 0.35em;
+  color: var(--muted);
+}
+
+.hero-apm-title {
+  font-family: "Playfair Display", "Times New Roman", serif;
+  font-size: clamp(1.9rem, 2vw + 1rem, 2.5rem);
+  letter-spacing: 0.02em;
+  font-weight: 500;
+  text-transform: none;
+}
+
+.hero-apm-subtitle {
+  max-width: 36rem;
+}
+
+.hero-apm .list-unstyled li {
+  color: var(--muted);
+}
+
+.hero-apm-photo-frame {
+  border: 1px solid var(--accent);
+  padding: 1.5rem 1.75rem 1.5rem 1.5rem;
+  display: inline-block;
+}
+
+.hero-apm-photo {
+  width: 100%;
+  height: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  filter: grayscale(100%);
+}
+
+/* Mini carrossel em "Casos reais em destaque" */
+.mini-carousel {
+  border: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.mini-carousel .carousel-inner {
+  border-bottom: 1px solid var(--border);
+}
+
+.mini-indicators {
+  position: static;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.mini-indicators button {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  background: transparent;
+  opacity: 1;
+}
+
+.mini-indicators button.active {
+  background: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .hero-apm {
+    text-align: center;
+  }
+
+  .hero-apm-label {
+    justify-content: center;
+  }
+
+  .hero-apm-photo-frame {
+    margin-top: 1.5rem;
+  }
+}
+
 .section {
   padding: 2.5rem 0; /* mais espaço entre seções */
 }
@@ -357,6 +529,29 @@ a:hover { text-decoration: underline; }
   color: var(--muted);
 }
 
+/* Padronização de fontes menores em cards da seção "O que fazemos" */
+
+#o-que-fazemos .card-body h3.h6 {
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 600;
+}
+
+#o-que-fazemos .card-body p {
+  font-size: 0.9rem;
+}
+
+/* Títulos dos cards de casos reais em destaque */
+#destaques .card-body h3.h6 {
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 600;
+}
+
 .contact {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -416,7 +611,7 @@ a:hover { text-decoration: underline; }
   border-top: 1px solid var(--border);
   padding: 1.5rem 0;
   margin-top: 1rem;
-  background: linear-gradient(180deg, #ffffff 0%, #fafbff 100%);
+  background: linear-gradient(180deg, #121212 0%, #050505 100%);
 }
 
 .footer-inner {
@@ -457,14 +652,14 @@ a:hover { text-decoration: underline; }
   display: none;
   min-width: 220px;
   padding: 0.5rem;
-  background: rgba(255,255,255,0.98);
+  background: rgba(8,8,8,0.98);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
 .more-menu.is-open { display: grid; gap: 0.25rem; }
 .more-menu a { padding: 0.65rem 0.7rem; border-radius: 8px; }
-.more-menu a:hover { background: #eef4ff; text-decoration: none; }
+.more-menu a:hover { background: #1d1a16; text-decoration: none; }
 
 /* Mobile: mostrar tudo dentro do hambúrguer */
 @media (max-width: 860px) {
@@ -504,7 +699,7 @@ a:hover { text-decoration: underline; }
     padding: 0.6rem;
     margin: 0.5rem 0 0;
 
-    background: rgba(255, 255, 255, 0.98);
+    background: rgba(8, 8, 8, 0.98);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
@@ -590,8 +785,8 @@ a:hover { text-decoration: underline; }
 .carousel-slide.is-active { display: block; }
 .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
 .carousel-controls { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; pointer-events: none; }
-.carousel-prev, .carousel-next { pointer-events: auto; margin: 0 0.5rem; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: rgba(255,255,255,0.85); backdrop-filter: blur(6px); cursor: pointer; }
-.carousel-prev:hover, .carousel-next:hover { background: #eef4ff; }
+.carousel-prev, .carousel-next { pointer-events: auto; margin: 0 0.5rem; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); cursor: pointer; color: var(--text); }
+.carousel-prev:hover, .carousel-next:hover { background: #1d1a16; }
 .carousel-dots { display: flex; gap: 0.4rem; justify-content: center; padding: 0.75rem; }
 .dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--accent); background: transparent; cursor: pointer; }
 .dot.is-active { background: var(--accent); }
@@ -621,8 +816,8 @@ a:hover { text-decoration: underline; }
 
 /* Rodapé: ações e sociais */
 .footer-actions { display: flex; align-items: center; gap: 0.6rem; }
-.social { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid #e8e8ee; border-radius: .5rem; background: #fff; }
-.social:hover { background: #f7f7f9; text-decoration: none; }
+.social { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid var(--border); border-radius: .5rem; background: #111111; }
+.social:hover { background: #1d1a16; text-decoration: none; }
 
 @media (max-width: 520px) {
   .footer-actions { width: 100%; justify-content: space-between; }

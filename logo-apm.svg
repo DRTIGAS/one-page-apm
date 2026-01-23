@@ -1,42 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="APM Arquitetura">
-  <title>APM Arquitetura</title>
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Ana Paula - Arquiteta e Interiores</title>
+  <desc id="desc">Símbolo abstrato da letra A em traço dourado dentro de um círculo dourado sobre fundo preto.</desc>
 
-  <!-- Moldura/ornamentos geométricos (estilo arquitetônico, linhas limpas) -->
-  <g stroke="#121212" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.92">
-    <!-- cantos externos -->
-    <path d="M52 38H38V52"/>
-    <path d="M188 38H202V52"/>
-    <path d="M52 202H38V188"/>
-    <path d="M188 202H202V188"/>
+  <!-- Fundo -->
+  <rect width="320" height="320" fill="#000000"/>
 
-    <!-- pequenos chevrons nos cantos -->
-    <path d="M62 54l-12 12"/>
-    <path d="M178 54l12 12"/>
-    <path d="M62 186l-12 -12"/>
-    <path d="M178 186l12 -12"/>
+  <!-- Círculo externo -->
+  <circle
+    cx="160"
+    cy="160"
+    r="138"
+    fill="none"
+    stroke="#F6CDA0"
+    stroke-width="4.5"
+  />
 
-    <!-- micro detalhes (pontos/traços) -->
-    <path d="M120 34v10"/>
-    <path d="M120 196v10"/>
-    <path d="M34 120h10"/>
-    <path d="M196 120h10"/>
-  </g>
-
-  <!-- losango interno (referência a planta/forma) -->
-  <path d="M120 56l56 64-56 64-56-64 56-64Z" stroke="#121212" stroke-width="2" opacity="0.35"/>
-
-  <!-- Monograma APM (geometria simples, sem serifa) -->
-  <g stroke="#121212" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-    <!-- A -->
-    <path d="M86 162l34-84 34 84"/>
-    <path d="M98 134h44"/>
-
-    <!-- P (hastes retas e arco) -->
-    <path d="M156 164V82"/>
-    <path d="M156 82h18c10 0 18 8 18 18s-8 18-18 18h-18"/>
-
-    <!-- M (linha sutil integrada na base, para não poluir) -->
-    <path d="M76 164h88" opacity="0.65"/>
-  </g>
+  <!-- Símbolo A estilizado -->
+  <path
+    d="M118 222
+       Q150 160 182 112
+       Q196 92 206 88
+       M180 204
+       Q198 204 210 202"
+    fill="none"
+    stroke="#A98A6A"
+    stroke-width="13"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
 </svg>
