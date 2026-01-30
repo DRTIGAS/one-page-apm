@@ -166,8 +166,8 @@ def contato() -> str:
 
     try:
         send_contact_email(nome, contato_campo, tipo_projeto, mensagem)
-    except Exception:
-        # Em produção, logar o erro; por enquanto só retorna 500 genérico
+    except Exception as e:
+        logger.exception("Erro ao processar /contato: %s", e)
         abort(500, "Erro ao enviar e-mail")
 
     return redirect("/?contato=ok")
