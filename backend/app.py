@@ -91,8 +91,13 @@ def _smtp_send(msg: EmailMessage) -> None:
 
 
 def send_contact_email(nome: str, contato: str, tipo_projeto: str, mensagem: str) -> None:
-    if not SMTP_USER or not SMTP_PASSWORD or not MAIL_TO:
-        raise RuntimeError("Configuração de SMTP ausente. Defina SMTP_USER, SMTP_PASSWORD e MAIL_TO.")
+    # Validate configuration depending on delivery method
+    if USE_SENDGRID:
+        if not SENDGRID_API_KEY or not SENDGRID_FROM or not MAIL_TO:
+            raise RuntimeError("Configuração SendGrid ausente. Defina SENDGRID_API_KEY, SENDGRID_FROM e MAIL_TO.")
+    else:
+        if not SMTP_USER or not SMTP_PASSWORD or not MAIL_TO:
+            raise RuntimeError("Configuração de SMTP ausente. Defina SMTP_USER, SMTP_PASSWORD e MAIL_TO.")
 
     body_lines = [
         f"Nome: {nome}",
