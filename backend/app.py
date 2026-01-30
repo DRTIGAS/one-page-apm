@@ -1,6 +1,9 @@
 import os
 import smtplib
+import socket
 from email.message import EmailMessage
+import logging
+from threading import Thread
 
 from dotenv import load_dotenv
 from flask import Flask, request, redirect, abort
@@ -11,12 +14,32 @@ load_dotenv()
 
 app = Flask(__name__)
 
+# Logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("apm-backend")
+
 
 SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USER = os.getenv("SMTP_USER")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 MAIL_TO = os.getenv("MAIL_TO", SMTP_USER)
+# timeout for SMTP socket in seconds
+SMTP_TIMEOUT = int(os.getenv("SMTP_TIMEOUT", "10"))
+# send asynchronously by default to avoid blocking HTTP
+SMTP_ASYNC = os.getenv("SMTP_ASYNC", "true").lower() in ("1", "true", "yes")
+
+
+def _smtp_send(msg: EmailMessage) -> None:
+    try:
+        logger.info("Iniciando conexão SMTP %s:%s", SMTP_HOST, SMTP_PORT)
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=SMTP_TIMEOUT) as server:
+            server.starttls()
+            server.login(SMTP_USER, SMTP_PASSWORD)
+            server.send_message(msg)
+        logger.info("E-mail enviado com sucesso para %s", MAIL_TO)
+    except (smtplib.SMTPException, socket.timeout, socket.error) as e:
+        logger.exception("Falha ao enviar e-mail: %s", e)
 
 
 def send_contact_email(nome: str, contato: str, tipo_projeto: str, mensagem: str) -> None:
@@ -38,10 +61,12 @@ def send_contact_email(nome: str, contato: str, tipo_projeto: str, mensagem: str
     msg["To"] = MAIL_TO
     msg.set_content("\n".join(body_lines))
 
-    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-        server.starttls()
-        server.login(SMTP_USER, SMTP_PASSWORD)
-        server.send_message(msg)
+    if SMTP_ASYNC:
+        logger.info("Enfileirando envio de e-mail em thread (assíncrono)")
+        Thread(target=_smtp_send, args=(msg,), daemon=True).start()
+    else:
+        # synchronous, will raise on failure
+        _smtp_send(msg)
 
 
 @app.post("/contato")
