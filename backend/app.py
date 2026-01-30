@@ -33,18 +33,19 @@ SMTP_ASYNC = os.getenv("SMTP_ASYNC", "true").lower() in ("1", "true", "yes")
 def _smtp_send(msg: EmailMessage) -> None:
     try:
         logger.info("Iniciando conexão SMTP %s:%s", SMTP_HOST, SMTP_PORT)
-        # First try to resolve IPv4 addresses specifically (droplet may be IPv4-only)
+        # First try to get IPv4 A records via gethostbyname_ex (returns IPv4 list)
         try:
-            addrs_v4 = socket.getaddrinfo(SMTP_HOST, SMTP_PORT, socket.AF_INET, socket.SOCK_STREAM)
-        except socket.gaierror:
-            addrs_v4 = []
+            ipv4_list = socket.gethostbyname_ex(SMTP_HOST)[2]
+        except Exception:
+            ipv4_list = []
 
         last_exc = None
 
-        if addrs_v4:
-            targets = addrs_v4
+        if ipv4_list:
+            # build targets as IPv4 sockaddr tuples consistent with getaddrinfo format
+            targets = [(socket.AF_INET, socket.SOCK_STREAM, 0, '', (ip, SMTP_PORT)) for ip in ipv4_list]
         else:
-            # fallback to any family (may yield IPv6 only)
+            # fallback to resolving any family (may yield IPv6 only)
             try:
                 targets = socket.getaddrinfo(SMTP_HOST, SMTP_PORT, 0, socket.SOCK_STREAM)
             except socket.gaierror:
