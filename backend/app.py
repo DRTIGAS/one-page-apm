@@ -33,17 +33,24 @@ SMTP_ASYNC = os.getenv("SMTP_ASYNC", "true").lower() in ("1", "true", "yes")
 def _smtp_send(msg: EmailMessage) -> None:
     try:
         logger.info("Iniciando conexão SMTP %s:%s", SMTP_HOST, SMTP_PORT)
-        # Resolve addresses (may return IPv6-only); prefer IPv4 addresses
+        # First try to resolve IPv4 addresses specifically (droplet may be IPv4-only)
         try:
-            addrs = socket.getaddrinfo(SMTP_HOST, SMTP_PORT, 0, socket.SOCK_STREAM)
+            addrs_v4 = socket.getaddrinfo(SMTP_HOST, SMTP_PORT, socket.AF_INET, socket.SOCK_STREAM)
         except socket.gaierror:
-            addrs = []
+            addrs_v4 = []
 
-        # sort to try IPv4 first
-        addrs_sorted = sorted(addrs, key=lambda x: 0 if x[0] == socket.AF_INET else 1)
         last_exc = None
 
-        if not addrs_sorted:
+        if addrs_v4:
+            targets = addrs_v4
+        else:
+            # fallback to any family (may yield IPv6 only)
+            try:
+                targets = socket.getaddrinfo(SMTP_HOST, SMTP_PORT, 0, socket.SOCK_STREAM)
+            except socket.gaierror:
+                targets = []
+
+        if not targets:
             # fallback: try direct hostname (may raise)
             try:
                 with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=SMTP_TIMEOUT) as server:
@@ -56,7 +63,7 @@ def _smtp_send(msg: EmailMessage) -> None:
                 logger.exception("Falha ao enviar e-mail sem endereços resolvidos: %s", e)
                 return
 
-        for family, socktype, proto, canonname, sockaddr in addrs_sorted:
+        for family, socktype, proto, canonname, sockaddr in targets:
             host_to_connect = sockaddr[0]
             port = sockaddr[1]
             try:
