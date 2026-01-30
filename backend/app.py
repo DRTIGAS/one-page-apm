@@ -2,7 +2,11 @@ import os
 import smtplib
 from email.message import EmailMessage
 
+from dotenv import load_dotenv
 from flask import Flask, request, redirect, abort
+
+
+load_dotenv()
 
 
 app = Flask(__name__)
