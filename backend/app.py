@@ -33,13 +33,48 @@ SMTP_ASYNC = os.getenv("SMTP_ASYNC", "true").lower() in ("1", "true", "yes")
 def _smtp_send(msg: EmailMessage) -> None:
     try:
         logger.info("Iniciando conexão SMTP %s:%s", SMTP_HOST, SMTP_PORT)
-        with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=SMTP_TIMEOUT) as server:
-            server.starttls()
-            server.login(SMTP_USER, SMTP_PASSWORD)
-            server.send_message(msg)
-        logger.info("E-mail enviado com sucesso para %s", MAIL_TO)
-    except (smtplib.SMTPException, socket.timeout, socket.error) as e:
-        logger.exception("Falha ao enviar e-mail: %s", e)
+        # Resolve addresses (may return IPv6-only); prefer IPv4 addresses
+        try:
+            addrs = socket.getaddrinfo(SMTP_HOST, SMTP_PORT, 0, socket.SOCK_STREAM)
+        except socket.gaierror:
+            addrs = []
+
+        # sort to try IPv4 first
+        addrs_sorted = sorted(addrs, key=lambda x: 0 if x[0] == socket.AF_INET else 1)
+        last_exc = None
+
+        if not addrs_sorted:
+            # fallback: try direct hostname (may raise)
+            try:
+                with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=SMTP_TIMEOUT) as server:
+                    server.starttls()
+                    server.login(SMTP_USER, SMTP_PASSWORD)
+                    server.send_message(msg)
+                logger.info("E-mail enviado com sucesso para %s", MAIL_TO)
+                return
+            except Exception as e:
+                logger.exception("Falha ao enviar e-mail sem endereços resolvidos: %s", e)
+                return
+
+        for family, socktype, proto, canonname, sockaddr in addrs_sorted:
+            host_to_connect = sockaddr[0]
+            port = sockaddr[1]
+            try:
+                logger.info("Tentando conexão SMTP em %s (family=%s)", host_to_connect, family)
+                with smtplib.SMTP(host_to_connect, port, timeout=SMTP_TIMEOUT) as server:
+                    server.starttls()
+                    server.login(SMTP_USER, SMTP_PASSWORD)
+                    server.send_message(msg)
+                logger.info("E-mail enviado com sucesso para %s via %s", MAIL_TO, host_to_connect)
+                return
+            except Exception as e:
+                last_exc = e
+                logger.warning("Falha conexão SMTP em %s: %s", host_to_connect, e)
+
+        # if we reach here, all attempts failed
+        logger.exception("Falha ao enviar e-mail após tentar todos os endereços: %s", last_exc)
+    except Exception as e:
+        logger.exception("Erro inesperado no envio SMTP: %s", e)
 
 
 def send_contact_email(nome: str, contato: str, tipo_projeto: str, mensagem: str) -> None:
