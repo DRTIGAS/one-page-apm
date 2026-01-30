@@ -4,6 +4,7 @@ import socket
 from email.message import EmailMessage
 import logging
 from threading import Thread
+import requests
 
 from dotenv import load_dotenv
 from flask import Flask, request, redirect, abort
@@ -28,6 +29,10 @@ MAIL_TO = os.getenv("MAIL_TO", SMTP_USER)
 SMTP_TIMEOUT = int(os.getenv("SMTP_TIMEOUT", "10"))
 # send asynchronously by default to avoid blocking HTTP
 SMTP_ASYNC = os.getenv("SMTP_ASYNC", "true").lower() in ("1", "true", "yes")
+# SendGrid configuration
+USE_SENDGRID = os.getenv("USE_SENDGRID", "false").lower() in ("1", "true", "yes")
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+SENDGRID_FROM = os.getenv("SENDGRID_FROM")
 
 
 def _smtp_send(msg: EmailMessage) -> None:
@@ -106,10 +111,42 @@ def send_contact_email(nome: str, contato: str, tipo_projeto: str, mensagem: str
 
     if SMTP_ASYNC:
         logger.info("Enfileirando envio de e-mail em thread (assíncrono)")
-        Thread(target=_smtp_send, args=(msg,), daemon=True).start()
+        # If SendGrid is configured, prefer SendGrid for delivery
+        if USE_SENDGRID and SENDGRID_API_KEY and SENDGRID_FROM:
+            Thread(target=_send_via_sendgrid, args=(msg,), daemon=True).start()
+        else:
+            Thread(target=_smtp_send, args=(msg,), daemon=True).start()
     else:
         # synchronous, will raise on failure
-        _smtp_send(msg)
+        if USE_SENDGRID and SENDGRID_API_KEY and SENDGRID_FROM:
+            _send_via_sendgrid(msg)
+        else:
+            _smtp_send(msg)
+
+
+def _send_via_sendgrid(msg: EmailMessage) -> None:
+    try:
+        logger.info("Enviando via SendGrid: %s -> %s", SENDGRID_FROM, MAIL_TO)
+        if not SENDGRID_API_KEY or not SENDGRID_FROM:
+            logger.warning("SendGrid não configurado corretamente")
+            return
+        url = "https://api.sendgrid.com/v3/mail/send"
+        headers = {
+            "Authorization": f"Bearer {SENDGRID_API_KEY}",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "personalizations": [{"to": [{"email": MAIL_TO}], "subject": msg["Subject"]}],
+            "from": {"email": SENDGRID_FROM},
+            "content": [{"type": "text/plain", "value": msg.get_content()}],
+        }
+        resp = requests.post(url, headers=headers, json=payload, timeout=10)
+        if resp.status_code >= 400:
+            logger.error("SendGrid error %s: %s", resp.status_code, resp.text)
+        else:
+            logger.info("SendGrid accepted message (status %s)", resp.status_code)
+    except Exception as e:
+        logger.exception("Falha ao enviar via SendGrid: %s", e)
 
 
 @app.post("/contato")
