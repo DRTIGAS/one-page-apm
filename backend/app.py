@@ -232,7 +232,8 @@ def contato() -> str:
     # if AJAX/json caller, return JSON, else redirect
     if request.is_json or request.headers.get("X-Requested-With") == "XMLHttpRequest" or "application/json" in request.headers.get("Accept", ""):
         return jsonify({"ok": True, "msg": "E-mail enfileirado/enviado"})
-    return redirect("/?contato=ok")
+    # Use 303 See Other to instruct the client to follow-up with GET (avoids clients re-POSTing on redirect)
+    return redirect("/?contato=ok", code=303)
 
 
 
