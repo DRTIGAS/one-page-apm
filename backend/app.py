@@ -112,7 +112,9 @@ def send_contact_email(nome: str, contato: str, tipo_projeto: str, mensagem: str
 
     msg = EmailMessage()
     msg["Subject"] = "Novo contato pelo site APM Arquitetura"
-    msg["From"] = SMTP_USER
+    # prefer explicit SendGrid from-address when configured, else SMTP_USER
+    from_addr = SENDGRID_FROM or SMTP_USER or "no-reply@localhost"
+    msg["From"] = from_addr
     msg["To"] = MAIL_TO
     msg.set_content("\n".join(body_lines))
 
@@ -199,10 +201,21 @@ def contato() -> str:
     except Exception:
         logger.exception("Erro ao logar metadata da requisição /contato")
 
-    nome = request.form.get("nome", "").strip()
-    contato_campo = request.form.get("contato", "").strip()
-    tipo_projeto = request.form.get("tipoProjeto", "").strip()
-    mensagem = request.form.get("mensagem", "").strip()
+    # support JSON payloads as well as form-encoded submissions
+    if request.is_json:
+        try:
+            data = request.get_json(force=True)
+        except Exception:
+            data = {}
+        nome = (data.get("nome") or "").strip()
+        contato_campo = (data.get("contato") or "").strip()
+        tipo_projeto = (data.get("tipoProjeto") or data.get("tipo_projeto") or "").strip()
+        mensagem = (data.get("mensagem") or "").strip()
+    else:
+        nome = request.form.get("nome", "").strip()
+        contato_campo = request.form.get("contato", "").strip()
+        tipo_projeto = request.form.get("tipoProjeto", "").strip()
+        mensagem = request.form.get("mensagem", "").strip()
 
     if not nome or not contato_campo or not tipo_projeto:
         abort(400, "Campos obrigatórios ausentes")
@@ -211,8 +224,14 @@ def contato() -> str:
         send_contact_email(nome, contato_campo, tipo_projeto, mensagem)
     except Exception as e:
         logger.exception("Erro ao processar /contato: %s", e)
+        # if request expects JSON, return a JSON error
+        if request.is_json or request.headers.get("X-Requested-With") == "XMLHttpRequest" or "application/json" in request.headers.get("Accept", ""):
+            return jsonify({"ok": False, "error": "Erro ao enviar e-mail"}), 500
         abort(500, "Erro ao enviar e-mail")
 
+    # if AJAX/json caller, return JSON, else redirect
+    if request.is_json or request.headers.get("X-Requested-With") == "XMLHttpRequest" or "application/json" in request.headers.get("Accept", ""):
+        return jsonify({"ok": True, "msg": "E-mail enfileirado/enviado"})
     return redirect("/?contato=ok")
 
 
