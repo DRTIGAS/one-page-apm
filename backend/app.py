@@ -181,6 +181,24 @@ def _send_via_sendgrid(msg: EmailMessage) -> bool:
 
 @app.post("/contato")
 def contato() -> str:
+    # Log incoming request metadata to help diagnose proxy vs direct differences
+    try:
+        logger.info("/contato request from %s", request.remote_addr)
+        # headers can contain non-serializable values; convert to dict
+        logger.info("/contato headers: %s", dict(request.headers))
+        # form and raw body for diagnosis
+        try:
+            logger.info("/contato form: %s", request.form.to_dict())
+        except Exception:
+            logger.warning("/contato: failed to read request.form")
+        try:
+            raw = request.get_data(as_text=True)
+            logger.info("/contato raw body: %s", raw)
+        except Exception:
+            logger.warning("/contato: failed to read raw body")
+    except Exception:
+        logger.exception("Erro ao logar metadata da requisição /contato")
+
     nome = request.form.get("nome", "").strip()
     contato_campo = request.form.get("contato", "").strip()
     tipo_projeto = request.form.get("tipoProjeto", "").strip()
